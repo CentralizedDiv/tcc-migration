@@ -1,5 +1,5 @@
 import fs from "fs";
-import { loopAndParse, saveContent } from "./utils";
+import { loopAndParse, saveContent } from "../utils";
 
 describe("Utils", () => {
   beforeAll(() => jest.mock("fs"));

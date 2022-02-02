@@ -1,5 +1,5 @@
-import { Comment, Discussion } from "./types";
-import { getComments, getDiscussions } from "./utils";
+import { Comment, Discussion } from "../types";
+import { getComments, getDiscussions } from "../utils";
 
 let discussions: Discussion[];
 let comments: Comment[];
@@ -19,7 +19,7 @@ beforeAll(() => {
 
 describe("Reddit", () => {
   test("Discussion", () => {
-    expect(baseFilter("1nvo5z", "REDDIT")).toHaveLength(1);
+    expect(discussions.filter(baseFilter("1nvo5z", "REDDIT"))).toHaveLength(1);
   });
   test("Comment", () => {
     expect(comments.filter(baseFilter("ccah352", "REDDIT"))).toHaveLength(1);
@@ -28,9 +28,13 @@ describe("Reddit", () => {
 
 describe("Youtube", () => {
   test("Discussion", () => {
-    expect(baseFilter("ORqLy6ANNbk", "YOUTUBE")).toHaveLength(1);
+    expect(
+      discussions.filter(baseFilter("ORqLy6ANNbk", "YOUTUBE"))
+    ).toHaveLength(1);
   });
   test("Comment", () => {
-    expect(baseFilter("Ugge3mUBme2mm3gCoAEC", "YOUTUBE")).toHaveLength(1);
+    expect(
+      comments.filter(baseFilter("Ugge3mUBme2mm3gCoAEC", "YOUTUBE"))
+    ).toHaveLength(1);
   });
 });
