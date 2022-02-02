@@ -1,0 +1,15 @@
+# Database list
+- [ ] comseqs
+- [ ] gamefaqs
+- [ ] gamefaqs-20180424
+- [ ] goodreads
+- [ ] got_rawtext
+- [ ] kagglenyt
+- [ ] movietalk
+- [ ] myanimelist
+- [x] reddit
+- [ ] reddit_may2015all
+- [ ] reddit_trees
+- [ ] reddit_trump
+- [ ] ynacc
+- [x] Youtube

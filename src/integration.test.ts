@@ -1,0 +1,36 @@
+import { Comment, Discussion } from "./types";
+import { getComments, getDiscussions } from "./utils";
+
+let discussions: Discussion[];
+let comments: Comment[];
+
+const baseFilter =
+  <T extends { extra?: { [key: string]: string }; system: string }>(
+    id: string,
+    system: string
+  ) =>
+  (entity: T) =>
+    entity.extra?.originalId === id && entity.system === system;
+
+beforeAll(() => {
+  discussions = getDiscussions();
+  comments = getComments();
+});
+
+describe("Reddit", () => {
+  test("Discussion", () => {
+    expect(baseFilter("1nvo5z", "REDDIT")).toHaveLength(1);
+  });
+  test("Comment", () => {
+    expect(comments.filter(baseFilter("ccah352", "REDDIT"))).toHaveLength(1);
+  });
+});
+
+describe("Youtube", () => {
+  test("Discussion", () => {
+    expect(baseFilter("ORqLy6ANNbk", "YOUTUBE")).toHaveLength(1);
+  });
+  test("Comment", () => {
+    expect(baseFilter("Ugge3mUBme2mm3gCoAEC", "YOUTUBE")).toHaveLength(1);
+  });
+});

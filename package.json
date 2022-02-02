@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.12",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/jest": "^27.4.0",
+    "@types/node": "^17.0.14",
+    "@types/uuid": "^8.3.4",
+    "babel-jest": "^27.4.6",
+    "jest": "^27.4.7",
+    "ts-node": "^10.4.0"
+  },
+  "license": "UNLICENSED"
+}
