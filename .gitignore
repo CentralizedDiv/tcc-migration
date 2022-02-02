@@ -2,6 +2,6 @@ __original_databases/*
 !__original_databases/.gitkeep 
 
 __unified_database/*
-!__unified_database/.gitkepp
+!__unified_database/.gitkeep
 
 node_modules
