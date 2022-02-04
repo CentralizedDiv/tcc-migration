@@ -22,23 +22,19 @@ describe("Utils", () => {
     jest
       .spyOn(fs, "readFileSync")
       .mockReturnValue(
-        '{ "comments": [{ "system": "Test", "content": "Bla" }, {"system": "Test2", "content": "Bla"}]}'
+        '[{ "system": "Test", "content": "Bla" }, {"system": "Test2", "content": "Bla"}]'
       );
     const writeFileSync = jest
       .spyOn(fs, "writeFileSync")
       .mockImplementation(() => {});
 
-    saveContent("PATH", "comments", "Test", [
-      { system: "Test", content: "BlaBla" },
-    ]);
+    saveContent("PATH", "Test", [{ system: "Test", content: "BlaBla" }]);
     expect(writeFileSync).toHaveBeenCalledWith(
       "PATH",
-      JSON.stringify({
-        comments: [
-          { system: "Test2", content: "Bla" },
-          { system: "Test", content: "BlaBla" },
-        ],
-      })
+      JSON.stringify([
+        { system: "Test2", content: "Bla" },
+        { system: "Test", content: "BlaBla" },
+      ])
     );
   });
 
@@ -46,25 +42,21 @@ describe("Utils", () => {
     jest
       .spyOn(fs, "readFileSync")
       .mockReturnValueOnce(
-        '{ "comments": [{ "system": "Test", "content": "Bla" }, { "system": "Test", "content": "Bla" }, { "system": "Test2", "content": "Bla" }, { "system": "Test3", "content": "Bla" }]}'
+        '[{ "system": "Test", "content": "Bla" }, { "system": "Test", "content": "Bla" }, { "system": "Test2", "content": "Bla" }, { "system": "Test3", "content": "Bla" }]'
       );
     jest.fn;
     const writeFileSync = jest
       .spyOn(fs, "writeFileSync")
       .mockImplementation(() => {});
 
-    saveContent("PATH", "comments", "Test", [
-      { system: "Test", content: "BlaBla" },
-    ]);
+    saveContent("PATH", "Test", [{ system: "Test", content: "BlaBla" }]);
     expect(writeFileSync).toHaveBeenCalledWith(
       "PATH",
-      JSON.stringify({
-        comments: [
-          { system: "Test2", content: "Bla" },
-          { system: "Test3", content: "Bla" },
-          { system: "Test", content: "BlaBla" },
-        ],
-      })
+      JSON.stringify([
+        { system: "Test2", content: "Bla" },
+        { system: "Test3", content: "Bla" },
+        { system: "Test", content: "BlaBla" },
+      ])
     );
   });
 });

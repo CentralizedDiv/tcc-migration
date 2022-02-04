@@ -13,7 +13,6 @@ try {
 
   saveContent(
     "D://workfolder//tcc//__unified_database//discussions.json",
-    "discussions",
     "YOUTUBE",
     discussions
   );
@@ -30,7 +29,6 @@ try {
 
   saveContent(
     "D://workfolder//tcc//__unified_database//comments.json",
-    "comments",
     "YOUTUBE",
     comments
   );

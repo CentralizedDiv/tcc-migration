@@ -7,7 +7,7 @@ export const getDiscussions = (): Discussion[] => {
       "D://workfolder//tcc//__unified_database//discussions.json",
       "utf8"
     )
-  ).discussions;
+  );
 };
 
 export const getComments = (): Comment[] => {
@@ -16,7 +16,7 @@ export const getComments = (): Comment[] => {
       "D://workfolder//tcc//__unified_database//comments.json",
       "utf8"
     )
-  ).comments;
+  );
 };
 
 export const loopAndParse = <T>(
@@ -48,17 +48,11 @@ export const loopAndParse = <T>(
 
 export const saveContent = <T extends { system: string }>(
   path: string,
-  property: string,
   system: string,
   content: T[]
 ) => {
-  const oldContent = JSON.parse(fs.readFileSync(path, "utf8"))[property];
+  const oldContent = JSON.parse(fs.readFileSync(path, "utf8"));
   const contentToSpread = oldContent.filter((row: T) => row.system !== system);
 
-  fs.writeFileSync(
-    path,
-    JSON.stringify({
-      [property]: [...contentToSpread, ...content],
-    })
-  );
+  fs.writeFileSync(path, JSON.stringify([...contentToSpread, ...content]));
 };

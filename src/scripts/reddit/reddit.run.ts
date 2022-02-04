@@ -14,7 +14,6 @@ try {
 
   saveContent(
     "D://workfolder//tcc//__unified_database//discussions.json",
-    "discussions",
     "REDDIT",
     discussions
   );
@@ -37,7 +36,6 @@ try {
 
   saveContent(
     "D://workfolder//tcc//__unified_database//comments.json",
-    "comments",
     "REDDIT",
     comments
   );
