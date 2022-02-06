@@ -1,4 +1,5 @@
 import fs from "fs";
+
 import { Comment, Discussion, Parser } from "./types";
 
 export const getDiscussions = (): Discussion[] => {
@@ -51,8 +52,15 @@ export const saveContent = <T extends { system: string }>(
   system: string,
   content: T[]
 ) => {
-  const oldContent = JSON.parse(fs.readFileSync(path, "utf8"));
-  const contentToSpread = oldContent.filter((row: T) => row.system !== system);
+  try {
+    const fileContent = fs.readFileSync(path, "utf8");
+    const oldContent = JSON.parse(fileContent);
+    const contentToSpread = oldContent.filter(
+      (row: T) => row.system !== system
+    );
 
-  fs.writeFileSync(path, JSON.stringify([...contentToSpread, ...content]));
+    fs.writeFileSync(path, JSON.stringify([...contentToSpread, ...content]));
+  } catch (err) {
+    console.log("saveContent", err);
+  }
 };

@@ -1,6 +1,7 @@
 import { Comment, Discussion, Parser } from "../../types";
 import { v4 as uuid } from "uuid";
 import fs from "fs";
+
 import { getDiscussions } from "../../utils";
 
 interface RedditDiscussion {

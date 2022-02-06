@@ -1,4 +1,5 @@
 import fs from "fs";
+
 import { loopAndParse, saveContent } from "../utils";
 
 describe("Utils", () => {
@@ -21,7 +22,7 @@ describe("Utils", () => {
   test("saveContent with two systems", () => {
     jest
       .spyOn(fs, "readFileSync")
-      .mockReturnValue(
+      .mockReturnValueOnce(
         '[{ "system": "Test", "content": "Bla" }, {"system": "Test2", "content": "Bla"}]'
       );
     const writeFileSync = jest

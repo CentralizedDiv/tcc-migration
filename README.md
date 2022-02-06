@@ -2,7 +2,7 @@
 - [ ] comseqs
 - [ ] gamefaqs
 - [ ] gamefaqs-20180424
-- [ ] goodreads
+- [x] goodreads
 - [ ] got_rawtext
 - [ ] kagglenyt
 - [ ] movietalk
@@ -12,4 +12,4 @@
 - [ ] reddit_trees
 - [ ] reddit_trump
 - [ ] ynacc
-- [x] Youtube
+- [x] youtube
