@@ -1,7 +1,6 @@
 import { Comment, Discussion, Parser } from "../../types";
 import { v4 as uuid } from "uuid";
-import fs from "fs";
-
+import * as fs from "fs";
 import { getDiscussions } from "../../utils";
 
 interface RedditDiscussion {
@@ -78,7 +77,7 @@ export const redditDiscussionParser: Parser<Discussion, RedditDiscussion> = (
     label: entry.title,
     description,
     extra: {
-      originalId: entry.dID,
+      originalId: entry.dID?.toString(),
       url: entry.url,
     },
   };
@@ -108,7 +107,7 @@ export const redditCommentsParser: Parser<Comment, RedditComment> = (entry) => {
       })[0] ?? "",
     extra: {
       user: entry.user,
-      originalId: entry.cID,
+      originalId: entry.cID?.toString(),
       threadId: entry.tID,
       upvotes: entry.upvotes,
       downvotes: entry.downvotes,

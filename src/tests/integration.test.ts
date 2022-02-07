@@ -47,3 +47,29 @@ describe("goodreads", () => {
     expect(comments.filter(baseFilter("6760426", "GOODREADS"))).toHaveLength(1);
   });
 });
+
+describe("movietalk", () => {
+  test("Discussion", () => {
+    expect(discussions.filter(baseFilter("620797", "MOVIETALK"))).toHaveLength(
+      1
+    );
+  });
+  test("Comment", () => {
+    expect(comments.filter(baseFilter("11525601", "MOVIETALK"))).toHaveLength(
+      1
+    );
+  });
+});
+
+describe("myanimelist", () => {
+  test("Discussion", () => {
+    expect(
+      discussions.filter(baseFilter("1599354", "MYANIMELIST"))
+    ).toHaveLength(1);
+  });
+  test("Comment", () => {
+    expect(comments.filter(baseFilter("2161916", "MYANIMELIST"))).toHaveLength(
+      1
+    );
+  });
+});

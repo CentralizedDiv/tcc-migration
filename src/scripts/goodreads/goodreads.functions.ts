@@ -1,7 +1,6 @@
 import { Comment, Discussion, Parser } from "../../types";
 import { v4 as uuid } from "uuid";
-import fs from "fs";
-
+import * as fs from "fs";
 import { getDiscussions } from "../../utils";
 
 type GoodreadsDiscussionRaw = string;
@@ -77,7 +76,7 @@ export const goodreadsDiscussionParser: Parser<
     label: entry.title,
     description: plot?.summary,
     extra: {
-      originalId: entry.id,
+      originalId: entry.id?.toString(),
       url: plot?.url,
       plot: plot?.plot,
     },
@@ -107,7 +106,7 @@ export const goodreadsCommentsParser: Parser<Comment, GoodreadsComment> = (
     content: entry.c,
     extra: {
       user: entry.cat,
-      originalId: entry.tID,
+      originalId: entry.tID?.toString(),
     },
   };
   return comment;

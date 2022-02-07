@@ -5,7 +5,7 @@
 - [x] goodreads
 - [ ] got_rawtext
 - [ ] kagglenyt
-- [ ] movietalk
+- [x] movietalk
 - [ ] myanimelist
 - [x] reddit
 - [ ] reddit_may2015all

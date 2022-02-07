@@ -1,5 +1,5 @@
-import fs from "fs";
-
+import * as fs from "fs";
+import * as es from "event-stream";
 import { Comment, Discussion, Parser } from "./types";
 
 export const getDiscussions = (): Discussion[] => {
@@ -23,28 +23,52 @@ export const getComments = (): Comment[] => {
 export const loopAndParse = <T>(
   path: string,
   parser: Parser<T>,
-  splitter: string = "\n"
-): T[] => {
-  let discussions: T[] = [];
-  try {
-    const data = fs.readFileSync(path, "utf8");
-    discussions = data
-      .split(splitter)
-      .map((original) => {
-        if (typeof original === "string") {
-          try {
-            return JSON.parse(original);
-          } catch (err) {
+  splitter: string = "\n",
+  returnStream: boolean = false
+) => {
+  let result: T[] = [];
+  let stream: fs.ReadStream;
+  const promise = new Promise((resolve, reject) => {
+    try {
+      console.log(`${path}: Start`);
+      stream = fs.createReadStream(path, "utf8");
+      stream
+        .pipe(es.split(splitter))
+        .pipe(
+          es.mapSync((original: any) => {
+            if (typeof original === "string") {
+              try {
+                return JSON.parse(original);
+              } catch (err) {
+                return original;
+              }
+            }
             return original;
-          }
-        }
-        return original;
-      })
-      .map(parser);
-  } catch (err) {
-    console.error(err);
-  }
-  return discussions;
+          })
+        )
+        .pipe(
+          es.mapSync((line) => {
+            const parsed = parser(line);
+            result.push(parsed);
+            return parsed;
+          })
+        )
+        .on("error", function (err) {
+          console.log(`${path} - Error: ${err}`);
+          reject();
+        })
+        .on("end", function () {
+          console.log(`${path}: Done`);
+          resolve(result);
+        });
+    } catch (err) {
+      console.error(err);
+      reject();
+    }
+  }).catch(() => {
+    return [];
+  });
+  return promise;
 };
 
 export const saveContent = <T extends { system: string }>(

@@ -1,19 +1,34 @@
-import fs from "fs";
-
+import * as fs from "fs";
+import { Readable } from "stream";
 import { loopAndParse, saveContent } from "../utils";
 
-describe("Utils", () => {
-  beforeAll(() => jest.mock("fs"));
+jest.mock("fs");
 
-  test("loopAndParse", () => {
+describe("Utils", () => {
+  let writeFileSync;
+
+  beforeAll(() => {
+    writeFileSync = jest
+      .spyOn(fs, "writeFileSync")
+      .mockImplementation(() => {});
+  });
+
+  afterAll(() => {
+    jest.resetAllMocks();
+    jest.clearAllMocks();
+  });
+
+  test("loopAndParse", async () => {
+    const stream = Readable.from([
+      '{"system": "Test", "content":"Bla"}\n{"system": "Test2", "content":"Bla"}',
+    ]);
+
     jest
-      .spyOn(fs, "readFileSync")
-      .mockReturnValueOnce(
-        '{"system": "Test", "content":"Bla"}\n{"system": "Test2", "content":"Bla"}'
-      );
+      .spyOn(fs, "createReadStream")
+      .mockReturnValueOnce(stream as unknown as fs.ReadStream);
 
     expect(
-      loopAndParse("PATH", (original) => ({
+      await loopAndParse("PATH", (original) => ({
         parsedSystem: original.system,
       }))
     ).toStrictEqual([{ parsedSystem: "Test" }, { parsedSystem: "Test2" }]);
@@ -25,9 +40,6 @@ describe("Utils", () => {
       .mockReturnValueOnce(
         '[{ "system": "Test", "content": "Bla" }, {"system": "Test2", "content": "Bla"}]'
       );
-    const writeFileSync = jest
-      .spyOn(fs, "writeFileSync")
-      .mockImplementation(() => {});
 
     saveContent("PATH", "Test", [{ system: "Test", content: "BlaBla" }]);
     expect(writeFileSync).toHaveBeenCalledWith(
@@ -45,10 +57,6 @@ describe("Utils", () => {
       .mockReturnValueOnce(
         '[{ "system": "Test", "content": "Bla" }, { "system": "Test", "content": "Bla" }, { "system": "Test2", "content": "Bla" }, { "system": "Test3", "content": "Bla" }]'
       );
-    jest.fn;
-    const writeFileSync = jest
-      .spyOn(fs, "writeFileSync")
-      .mockImplementation(() => {});
 
     saveContent("PATH", "Test", [{ system: "Test", content: "BlaBla" }]);
     expect(writeFileSync).toHaveBeenCalledWith(

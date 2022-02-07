@@ -1,5 +1,4 @@
-import fs from "fs";
-
+import * as fs from "fs";
 fs.writeFileSync(
   __dirname + "/../__unified_database/comments.json",
   JSON.stringify([]),

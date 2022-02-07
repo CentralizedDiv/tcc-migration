@@ -27,7 +27,7 @@ export const youtubeDiscussionParser: Parser<Discussion, YoutubeDiscussion> = (
     label: null,
     description: null,
     extra: {
-      originalId: entry.vID,
+      originalId: entry.vID?.toString(),
       WikiUrl: JSON.stringify(entry.WikiUrl),
     },
   };
@@ -56,7 +56,7 @@ export const youtubeCommentsParser: Parser<Comment, YoutubeComment> = (
     content: entry.c ?? "",
     extra: {
       user: entry.author,
-      originalId: entry.cID,
+      originalId: entry.cID?.toString(),
     },
   };
   return comment;

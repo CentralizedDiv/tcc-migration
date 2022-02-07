@@ -1,8 +1,4 @@
-export type Parser<T, J = any> = (
-  entry: J,
-  index: number,
-  originalArr: J[]
-) => T;
+export type Parser<T, J = any> = (entry: J) => T;
 
 export interface System {
   id: string;
