@@ -1,5 +1,7 @@
 import * as fs from "fs";
 import * as es from "event-stream";
+import progress from "progress-stream";
+
 import { Comment, Discussion, Parser } from "./types";
 
 export const getDiscussions = (): Discussion[] => {
@@ -26,12 +28,22 @@ export const loopAndParse = <T>(
   splitter: string = "\n"
 ) => {
   let result: T[] = [];
-  let stream: fs.ReadStream;
   const promise = new Promise<T[]>((resolve, reject) => {
     try {
+      const stat = fs.statSync(path);
+      const str = progress({
+        length: stat.size,
+        time: 100,
+      });
+      str.on("progress", function (progress) {
+        process.stdout.clearLine(0);
+        process.stdout.cursorTo(0);
+        process.stdout.write(progress.percentage.toFixed(2) + "%");
+      });
+
       console.log(`${path}: Start`);
-      stream = fs.createReadStream(path, "utf8");
-      stream
+      fs.createReadStream(path, "utf8")
+        .pipe(str)
         .pipe(es.split(splitter))
         .pipe(
           es.mapSync((original: any) => {
@@ -48,20 +60,22 @@ export const loopAndParse = <T>(
         .pipe(
           es.mapSync((line: any) => {
             const parsed = parser(line);
-            result.push(parsed);
-            return parsed;
+            if (parsed) {
+              result.push(parsed);
+              return parsed;
+            }
           })
         )
         .on("error", function (err) {
-          console.log(`${path} - Error: ${err}`);
+          console.log(`\n${path} - Error: ${err}`);
           reject();
         })
         .on("end", function () {
-          console.log(`${path}: Done`);
+          console.log(`\n${path}: Done`);
           resolve(result);
         });
     } catch (err) {
-      console.error(err);
+      console.error(`\n ${err}`);
       reject();
     }
   }).catch(() => {
@@ -76,13 +90,13 @@ export const saveContent = <T extends { system: string }>(
   content: T[]
 ) => {
   try {
-    let fileContent: string;
+    let oldContent: any;
     try {
-      fileContent = fs.readFileSync(path, "utf8");
+      const fileContent = fs.readFileSync(path, "utf8");
+      oldContent = JSON.parse(fileContent ?? "[]");
     } catch {
-      fileContent = "[]";
+      oldContent = [];
     }
-    const oldContent = JSON.parse(fileContent);
     const contentToSpread = oldContent.filter(
       (row: T) => row.system !== system
     );

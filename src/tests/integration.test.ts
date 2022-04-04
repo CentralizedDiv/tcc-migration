@@ -1,8 +1,4 @@
-import { Comment, Discussion } from "../types";
-import { getComments, getDiscussions } from "../utils";
-
-let discussions: Discussion[];
-let comments: Comment[];
+import * as fs from "fs";
 
 const baseFilter =
   <T extends { extra?: { [key: string]: string }; system: string }>(
@@ -11,11 +7,6 @@ const baseFilter =
   ) =>
   (entity: T) =>
     entity.extra?.originalId === id && entity.system === system;
-
-beforeAll(() => {
-  discussions = getDiscussions();
-  comments = getComments();
-});
 
 // describe("Reddit", () => {
 //   test("Discussion", () => {
@@ -39,36 +30,48 @@ beforeAll(() => {
 //   });
 // });
 
-describe("goodreads", () => {
-  test("Discussion", () => {
-    expect(discussions.filter(baseFilter("1", "GOODREADS"))).toHaveLength(1);
-  });
-  test("Comment", () => {
-    expect(comments.filter(baseFilter("6760426", "GOODREADS"))).toHaveLength(1);
-  });
-});
+// describe("goodreads", () => {
+//   test("Discussion", () => {
+//     expect(discussions.filter(baseFilter("1", "GOODREADS"))).toHaveLength(1);
+//   });
+//   test("Comment", () => {
+//     expect(comments.filter(baseFilter("6760426", "GOODREADS"))).toHaveLength(1);
+//   });
+// });
 
-describe("movietalk", () => {
-  test("Discussion", () => {
-    expect(discussions.filter(baseFilter("620797", "MOVIETALK"))).toHaveLength(
-      1
-    );
-  });
-  test("Comment", () => {
-    expect(comments.filter(baseFilter("11525601", "MOVIETALK"))).toHaveLength(
-      1
-    );
-  });
-});
+// describe("movietalk", () => {
+//   test("Discussion", () => {
+//     expect(discussions.filter(baseFilter("620797", "MOVIETALK"))).toHaveLength(
+//       1
+//     );
+//   });
+//   test("Comment", () => {
+//     expect(comments.filter(baseFilter("11525601", "MOVIETALK"))).toHaveLength(
+//       1
+//     );
+//   });
+// });
 
 describe("myanimelist", () => {
   test("Discussion", () => {
+    const discussions = JSON.parse(
+      fs.readFileSync(
+        "F://tcc//__unified_database//myanimelist.discussions.json",
+        "utf8"
+      )
+    );
     expect(
       discussions.filter(baseFilter("1599354", "MYANIMELIST"))
     ).toHaveLength(1);
   });
   test("Comment", () => {
-    expect(comments.filter(baseFilter("2161916", "MYANIMELIST"))).toHaveLength(
+    const comments = JSON.parse(
+      fs.readFileSync(
+        "F://tcc//__unified_database//myanimelist.comments.json",
+        "utf8"
+      )
+    );
+    expect(comments.filter(baseFilter("40287509", "MYANIMELIST"))).toHaveLength(
       1
     );
   });
