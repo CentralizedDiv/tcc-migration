@@ -23,12 +23,11 @@ export const getComments = (): Comment[] => {
 export const loopAndParse = <T>(
   path: string,
   parser: Parser<T>,
-  splitter: string = "\n",
-  returnStream: boolean = false
+  splitter: string = "\n"
 ) => {
   let result: T[] = [];
   let stream: fs.ReadStream;
-  const promise = new Promise((resolve, reject) => {
+  const promise = new Promise<T[]>((resolve, reject) => {
     try {
       console.log(`${path}: Start`);
       stream = fs.createReadStream(path, "utf8");
@@ -47,7 +46,7 @@ export const loopAndParse = <T>(
           })
         )
         .pipe(
-          es.mapSync((line) => {
+          es.mapSync((line: any) => {
             const parsed = parser(line);
             result.push(parsed);
             return parsed;
@@ -77,13 +76,20 @@ export const saveContent = <T extends { system: string }>(
   content: T[]
 ) => {
   try {
-    const fileContent = fs.readFileSync(path, "utf8");
+    let fileContent: string;
+    try {
+      fileContent = fs.readFileSync(path, "utf8");
+    } catch {
+      fileContent = "[]";
+    }
     const oldContent = JSON.parse(fileContent);
     const contentToSpread = oldContent.filter(
       (row: T) => row.system !== system
     );
 
-    fs.writeFileSync(path, JSON.stringify([...contentToSpread, ...content]));
+    fs.writeFileSync(path, JSON.stringify([...contentToSpread, ...content]), {
+      flag: "w",
+    });
   } catch (err) {
     console.log("saveContent", err);
   }

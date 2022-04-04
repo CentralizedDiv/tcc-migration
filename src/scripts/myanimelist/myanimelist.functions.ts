@@ -41,7 +41,7 @@ const stripmsg = (c: string) => {
 
 const getCommentOriginalId = (c: string) => {
   try {
-    return c.match(/id=\"message([^"]+)/g)[0].replace(/\D/g, "");
+    return c.match(/id=\"message([^"]+)/g)?.[0]?.replace(/\D/g, "");
   } catch (e) {
     return null;
   }
@@ -88,10 +88,9 @@ const getAnimes = () => {
     });
 };
 
-export const myanimelistDiscussionParser: Parser<
-  Discussion,
-  MyAnimeListRawDiscussion
-> = (rawEntry): Discussion | undefined => {
+export const myanimelistDiscussionParser = (
+  rawEntry: MyAnimeListRawDiscussion
+): Discussion | undefined => {
   const entry = formatDiscussion(rawEntry);
   if (!myanimelistDiscussions.hasOwnProperty(entry.id)) {
     const id = uuid();
@@ -110,8 +109,8 @@ export const myanimelistDiscussionParser: Parser<
   }
 };
 
-export const myanimelistCommentsParser: Parser<Comment, MyAnimeListComment> = (
-  entry
+export const myanimelistCommentsParser = (
+  entry: MyAnimeListComment
 ): Comment | undefined => {
   const originalId = getCommentOriginalId(entry.c);
   if (originalId && !myanimelistComments.hasOwnProperty(originalId)) {
@@ -124,9 +123,8 @@ export const myanimelistCommentsParser: Parser<Comment, MyAnimeListComment> = (
       url: "",
       animeTitle: "",
     };
-    const {
-      extra: { partialUrl },
-    } = myanimelistDiscussions[entry.tID] ?? { extra: { partialUrl: "" } };
+    const partialUrl =
+      myanimelistDiscussions[entry.tID]?.extra?.partialUrl ?? "";
 
     const comment: Comment = {
       id,
