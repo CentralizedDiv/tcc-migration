@@ -6,7 +6,7 @@
 - [ ] got_rawtext
 - [ ] kagglenyt
 - [x] movietalk
-- [ ] myanimelist
+- [x] myanimelist
 - [x] reddit
 - [ ] reddit_may2015all
 - [ ] reddit_trees
