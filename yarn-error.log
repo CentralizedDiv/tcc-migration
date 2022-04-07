@@ -1,34 +1,39 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js generate
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add -D @types/JSONStream
 
 PATH: 
-  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Boxstarter;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Windows\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\doxygen\bin;C:\Program Files\PuTTY\;C:\Program Files (x86)\Yarn\bin\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\wamp\bin\php\php7.1.22;C:\composer;C:\Python37-32;C:\Python37-32\;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Python27;C:\Users\kathu\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\SafeNet\Authentication\SAC\x64;C:\Program Files\SafeNet\Authentication\SAC\x32;C:\Program Files\Git\cmd;C:\Users\kathu\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\WireGuard\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Users\kathu\AppData\Local\Microsoft\WindowsApps;C:\MinGW\bin;C:\Program Files (x86)\GnuWin32\bin;C:\MongoDB\bin;C:\mysql\bin;C:\Users\kathu\AppData\Local\Yarn\bin;C:\Program Files (x86)\Java\jdk1.8.0_191\bin;C:\Users\kathu\AppData\Local\Android\Sdk\tools\bin;C:\Users\kathu\AppData\Local\Microsoft\WindowsApps;C:\Users\kathu\AppData\Roaming\Composer\vendor\bin;C:\Users\kathu\AppData\Roaming\npm;C:\workfolder\flutter\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2019.1.3\bin;C:\Program Files\heroku\bin;C:\Users\kathu\AppData\Local\hyper\app-3.0.2\resources\bin;C:\Users\kathu\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\kathu\AppData\Local\Programs\Microsoft VS Code\bin
+  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Python39\Scripts\;C:\Python39\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\ProgramData\chocolatey\bin;C:\Users\kathu\AppData\Local\Android\Sdk\platform-tools;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\Users\kathu\Downloads\apache-maven-3.6.3-bin\apache-maven-3.6.3\bin;C:\Users\kathu\AppData\Local\Android\Sdk\emulator;C:\Program Files\Common Files\Autodesk Shared\;C:\Program Files (x86)\Autodesk\Backburner\;C:\Users\kathu\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\WireGuard\;C:\Program Files\PuTTY\;C:\Program Files (x86)\dotnet\;C:\Program Files\dotnet\;C:\Users\kathu\anaconda3;C:\Users\kathu\anaconda3\Library\mingw-w64\bin;C:\Users\kathu\anaconda3\Library\usr\bin;C:\Users\kathu\anaconda3\Library\bin;C:\Users\kathu\anaconda3\Scripts;C:\Users\kathu\AppData\Local\jdk-11.0.2\bin;C:\Users\kathu\AppData\Local\python2\scripts;C:\Users\kathu\AppData\Local\python2;C:\Users\kathu\AppData\Local\Microsoft\WindowsApps;C:\Users\kathu\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\kathu\AppData\Local\Yarn\bin;C:\Users\kathu\AppData\Roaming\npm;C:\Users\kathu\AppData\Roaming\nvm;C:\Program Files\nodejs
 
 Yarn version: 
-  1.12.3
+  1.22.5
 
 Node version: 
-  14.17.0
+  14.15.1
 
 Platform: 
   win32 x64
 
 Trace: 
-  SyntaxError: F:\tcc\package.json: Unexpected token } in JSON at position 525
-      at JSON.parse (<anonymous>)
-      at C:\Program Files (x86)\Yarn\lib\cli.js:1631:59
-      at Generator.next (<anonymous>)
-      at step (C:\Program Files (x86)\Yarn\lib\cli.js:304:30)
-      at C:\Program Files (x86)\Yarn\lib\cli.js:315:13
+  Error: https://registry.yarnpkg.com/@types%2fJSONStream: Not found
+      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66097:18)
+      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140749:22)
+      at Request.emit (events.js:315:20)
+      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141721:10)
+      at Request.emit (events.js:315:20)
+      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141643:12)
+      at Object.onceWrapper (events.js:421:28)
+      at IncomingMessage.emit (events.js:327:22)
+      at endReadableNT (_stream_readable.js:1327:12)
+      at processTicksAndRejections (internal/process/task_queues.js:80:21)
 
 npm manifest: 
   {
     "scripts": {
       "test": "jest",
-      "generate": "ts-node src/run.ts"
+      "integration-test": "jest -- src/tests/integration.test.ts",
+      "generate": "ts-node src/run.ts --max-old-space-size=4096"
     },
-    "dependencies": {
-    },
+    "dependencies": {},
     "devDependencies": {
       "@babel/core": "^7.16.12",
       "@babel/preset-env": "^7.16.11",
@@ -36,13 +41,16 @@ npm manifest:
       "@types/event-stream": "^4.0.0",
       "@types/jest": "^27.4.0",
       "@types/node": "^17.0.14",
+      "@types/progress-stream": "^2.0.2",
       "@types/uuid": "^8.3.4",
+      "JSONStream": "^1.3.5",
       "babel-jest": "^27.4.6",
       "event-stream": "^4.0.1",
       "jest": "^27.4.7",
+      "progress-stream": "^2.0.0",
       "ts-node": "^10.4.0",
       "typescript": "^4.6.3",
-      "uuid": "^8.3.2",
+      "uuid": "^8.3.2"
     },
     "license": "UNLICENSED"
   }
@@ -1288,11 +1296,11 @@ Lockfile:
       "@types/istanbul-lib-report" "*"
   
   "@types/jest@^27.4.0":
-    version "27.4.0"
-    resolved "https://registry.yarnpkg.com/@types/jest/-/jest-27.4.0.tgz#037ab8b872067cae842a320841693080f9cb84ed"
-    integrity sha512-gHl8XuC1RZ8H2j5sHv/JqsaxXkDDM9iDOgu0Wp8sjs4u/snb2PVehyWXJPr+ORA0RPpgw231mnutWI1+0hgjIQ==
+    version "27.4.1"
+    resolved "https://registry.yarnpkg.com/@types/jest/-/jest-27.4.1.tgz#185cbe2926eaaf9662d340cc02e548ce9e11ab6d"
+    integrity sha512-23iPJADSmicDVrWk+HT58LMJtzLAnB2AgIzplQuq/bSrGaxCrlvRFjGbXmamnnk/mAmCdLStiGqggu28ocUyiw==
     dependencies:
-      jest-diff "^27.0.0"
+      jest-matcher-utils "^27.0.0"
       pretty-format "^27.0.0"
   
   "@types/node@*", "@types/node@^17.0.14":
@@ -1304,6 +1312,13 @@ Lockfile:
     version "2.4.3"
     resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.4.3.tgz#a3c65525b91fca7da00ab1a3ac2b5a2a4afbffbf"
     integrity sha512-QzSuZMBuG5u8HqYz01qtMdg/Jfctlnvj1z/lYnIDXs/golxw0fxtRAHd9KrzjR7Yxz1qVeI00o0kiO3PmVdJ9w==
+  
+  "@types/progress-stream@^2.0.2":
+    version "2.0.2"
+    resolved "https://registry.yarnpkg.com/@types/progress-stream/-/progress-stream-2.0.2.tgz#443afb2c29cfde0e6240805364b7715bc5bd03a8"
+    integrity sha512-u9N40mYX/Nx/Pmt847+G2N72s5QL2jwgXrVKCIcxgOdMBdIzY+e/m3m1gQBNPmgvQQBO79EisLAcVJ/p0qKuvA==
+    dependencies:
+      "@types/node" "*"
   
   "@types/stack-utils@^2.0.0":
     version "2.0.1"
@@ -1326,6 +1341,14 @@ Lockfile:
     integrity sha512-T8Yc9wt/5LbJyCaLiHPReJa0kApcIgJ7Bn735GjItUfh08Z1pJvu8QZqb9s+mMvKV6WUQRV7K2R46YbjMXTTJw==
     dependencies:
       "@types/yargs-parser" "*"
+  
+  JSONStream@^1.3.5:
+    version "1.3.5"
+    resolved "https://registry.yarnpkg.com/JSONStream/-/JSONStream-1.3.5.tgz#3208c1f08d3a4d99261ab64f92302bc15e111ca0"
+    integrity sha512-E+iruNOY8VV9s4JEbe1aNEm6MiszPRr/UfcHMz0TQh1BXSxHK+ASV1R6W4HpjBhSeS+54PIsAMCBmwD06LLsqQ==
+    dependencies:
+      jsonparse "^1.2.0"
+      through ">=2.2.7 <3"
   
   abab@^2.0.3, abab@^2.0.5:
     version "2.0.5"
@@ -1693,6 +1716,11 @@ Lockfile:
       browserslist "^4.19.1"
       semver "7.0.0"
   
+  core-util-is@~1.0.0:
+    version "1.0.3"
+    resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.3.tgz#a6042d3634c2b27e9328f837b965fac83808db85"
+    integrity sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==
+  
   create-require@^1.1.0:
     version "1.1.1"
     resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
@@ -1781,6 +1809,11 @@ Lockfile:
     version "27.4.0"
     resolved "https://registry.yarnpkg.com/diff-sequences/-/diff-sequences-27.4.0.tgz#d783920ad8d06ec718a060d00196dfef25b132a5"
     integrity sha512-YqiQzkrsmHMH5uuh8OdQFU9/ZpADnwzml8z0O5HvRNda+5UZsaX/xN+AAxfR2hWq1Y7HZnAzO9J5lJXOuDz2Ww==
+  
+  diff-sequences@^27.5.1:
+    version "27.5.1"
+    resolved "https://registry.yarnpkg.com/diff-sequences/-/diff-sequences-27.5.1.tgz#eaecc0d327fd68c8d9672a1e64ab8dccb2ef5327"
+    integrity sha512-k1gCAXAsNgLwEL+Y8Wvl+M6oEFj5bgazfZULpS5CneoPPXRaCCW7dm+q21Ky2VEE5X+VeRDBVg1Pcvvsr4TtNQ==
   
   diff@^4.0.1:
     version "4.0.2"
@@ -2095,7 +2128,7 @@ Lockfile:
       once "^1.3.0"
       wrappy "1"
   
-  inherits@2:
+  inherits@2, inherits@~2.0.3:
     version "2.0.4"
     resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
     integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
@@ -2136,6 +2169,11 @@ Lockfile:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/is-typedarray/-/is-typedarray-1.0.0.tgz#e479c80858df0c1b11ddda6940f96011fcda4a9a"
     integrity sha1-5HnICFjfDBsR3dppQPlgEfzaSpo=
+  
+  isarray@~1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/isarray/-/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11"
+    integrity sha1-u5NdSFgsuhaMBoNJV6VKPgcSTxE=
   
   isexe@^2.0.0:
     version "2.0.0"
@@ -2264,7 +2302,7 @@ Lockfile:
       pretty-format "^27.4.6"
       slash "^3.0.0"
   
-  jest-diff@^27.0.0, jest-diff@^27.4.6:
+  jest-diff@^27.4.6:
     version "27.4.6"
     resolved "https://registry.yarnpkg.com/jest-diff/-/jest-diff-27.4.6.tgz#93815774d2012a2cbb6cf23f84d48c7a2618f98d"
     integrity sha512-zjaB0sh0Lb13VyPsd92V7HkqF6yKRH9vm33rwBt7rPYrpQvS1nCvlIy2pICbKta+ZjWngYLNn4cCK4nyZkjS/w==
@@ -2273,6 +2311,16 @@ Lockfile:
       diff-sequences "^27.4.0"
       jest-get-type "^27.4.0"
       pretty-format "^27.4.6"
+  
+  jest-diff@^27.5.1:
+    version "27.5.1"
+    resolved "https://registry.yarnpkg.com/jest-diff/-/jest-diff-27.5.1.tgz#a07f5011ac9e6643cf8a95a462b7b1ecf6680def"
+    integrity sha512-m0NvkX55LDt9T4mctTEgnZk3fmEg3NRYutvMPWM/0iPnkFj2wIeF45O1718cMSOFO1vINkqmxqD8vE37uTEbqw==
+    dependencies:
+      chalk "^4.0.0"
+      diff-sequences "^27.5.1"
+      jest-get-type "^27.5.1"
+      pretty-format "^27.5.1"
   
   jest-docblock@^27.4.0:
     version "27.4.0"
@@ -2321,6 +2369,11 @@ Lockfile:
     version "27.4.0"
     resolved "https://registry.yarnpkg.com/jest-get-type/-/jest-get-type-27.4.0.tgz#7503d2663fffa431638337b3998d39c5e928e9b5"
     integrity sha512-tk9o+ld5TWq41DkK14L4wox4s2D9MtTpKaAVzXfr5CUKm5ZK2ExcaFE0qls2W71zE/6R2TxxrK9w2r6svAFDBQ==
+  
+  jest-get-type@^27.5.1:
+    version "27.5.1"
+    resolved "https://registry.yarnpkg.com/jest-get-type/-/jest-get-type-27.5.1.tgz#3cd613c507b0f7ace013df407a1c1cd578bcb4f1"
+    integrity sha512-2KY95ksYSaK7DMBWQn6dQz3kqAf3BB64y2udeG+hv4KfSOb9qwcYQstTJc1KCbsix+wLZWZYN8t7nwX3GOBLRw==
   
   jest-haste-map@^27.4.6:
     version "27.4.6"
@@ -2372,6 +2425,16 @@ Lockfile:
     dependencies:
       jest-get-type "^27.4.0"
       pretty-format "^27.4.6"
+  
+  jest-matcher-utils@^27.0.0:
+    version "27.5.1"
+    resolved "https://registry.yarnpkg.com/jest-matcher-utils/-/jest-matcher-utils-27.5.1.tgz#9c0cdbda8245bc22d2331729d1091308b40cf8ab"
+    integrity sha512-z2uTx/T6LBaCoNWNFWwChLBKYxTMcGBRjAt+2SbP929/Fflb9aa5LGma654Rz8z9HLxsrUaYzxE9T/EFIL/PAw==
+    dependencies:
+      chalk "^4.0.0"
+      jest-diff "^27.5.1"
+      jest-get-type "^27.5.1"
+      pretty-format "^27.5.1"
   
   jest-matcher-utils@^27.4.6:
     version "27.4.6"
@@ -2651,6 +2714,11 @@ Lockfile:
     dependencies:
       minimist "^1.2.5"
   
+  jsonparse@^1.2.0:
+    version "1.3.1"
+    resolved "https://registry.yarnpkg.com/jsonparse/-/jsonparse-1.3.1.tgz#3f4dae4a91fac315f71062f8521cc239f1366280"
+    integrity sha1-P02uSpH6wxX3EGL4UhzCOfE2YoA=
+  
   kleur@^3.0.3:
     version "3.0.3"
     resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
@@ -2924,6 +2992,28 @@ Lockfile:
       ansi-styles "^5.0.0"
       react-is "^17.0.1"
   
+  pretty-format@^27.5.1:
+    version "27.5.1"
+    resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-27.5.1.tgz#2181879fdea51a7a5851fb39d920faa63f01d88e"
+    integrity sha512-Qb1gy5OrP5+zDf2Bvnzdl3jsTf1qXVMazbvCoKhtKqVs4/YK4ozX4gKQJJVyNe+cajNPn0KoC0MC3FUmaHWEmQ==
+    dependencies:
+      ansi-regex "^5.0.1"
+      ansi-styles "^5.0.0"
+      react-is "^17.0.1"
+  
+  process-nextick-args@~2.0.0:
+    version "2.0.1"
+    resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
+    integrity sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
+  
+  progress-stream@^2.0.0:
+    version "2.0.0"
+    resolved "https://registry.yarnpkg.com/progress-stream/-/progress-stream-2.0.0.tgz#fac63a0b3d11deacbb0969abcc93b214bce19ed5"
+    integrity sha1-+sY6Cz0R3qy7CWmrzJOyFLzhntU=
+    dependencies:
+      speedometer "~1.0.0"
+      through2 "~2.0.3"
+  
   prompts@^2.0.1:
     version "2.4.2"
     resolved "https://registry.yarnpkg.com/prompts/-/prompts-2.4.2.tgz#7b57e73b3a48029ad10ebd44f74b01722a4cb069"
@@ -2946,6 +3036,19 @@ Lockfile:
     version "17.0.2"
     resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
     integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
+  
+  readable-stream@~2.3.6:
+    version "2.3.7"
+    resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.3.7.tgz#1eca1cf711aef814c04f62252a36a62f6cb23b57"
+    integrity sha512-Ebho8K4jIbHAxnuxi7o42OrZgF/ZTNcsZj6nRKyUmkhLFq8CHItp/fy6hQZuZmP/n3yZ9VBUbp4zz/mX8hmYPw==
+    dependencies:
+      core-util-is "~1.0.0"
+      inherits "~2.0.3"
+      isarray "~1.0.0"
+      process-nextick-args "~2.0.0"
+      safe-buffer "~5.1.1"
+      string_decoder "~1.1.1"
+      util-deprecate "~1.0.1"
   
   regenerate-unicode-properties@^9.0.0:
     version "9.0.0"
@@ -3033,7 +3136,7 @@ Lockfile:
     dependencies:
       glob "^7.1.3"
   
-  safe-buffer@~5.1.1:
+  safe-buffer@~5.1.0, safe-buffer@~5.1.1:
     version "5.1.2"
     resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
     integrity sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
@@ -3117,6 +3220,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.7.3.tgz#5302f8169031735226544092e64981f751750383"
     integrity sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==
   
+  speedometer@~1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/speedometer/-/speedometer-1.0.0.tgz#cd671cb06752c22bca3370e2f334440be4fc62e2"
+    integrity sha1-zWccsGdSwivKM3Di8zREC+T8YuI=
+  
   split@^1.0.1:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/split/-/split-1.0.1.tgz#605bd9be303aa59fb35f9229fbea0ddec9ea07d9"
@@ -3160,6 +3268,13 @@ Lockfile:
       emoji-regex "^8.0.0"
       is-fullwidth-code-point "^3.0.0"
       strip-ansi "^6.0.1"
+  
+  string_decoder@~1.1.1:
+    version "1.1.1"
+    resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-1.1.1.tgz#9cf1611ba62685d7030ae9e4ba34149c3af03fc8"
+    integrity sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==
+    dependencies:
+      safe-buffer "~5.1.0"
   
   strip-ansi@^6.0.0, strip-ansi@^6.0.1:
     version "6.0.1"
@@ -3239,7 +3354,15 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/throat/-/throat-6.0.1.tgz#d514fedad95740c12c2d7fc70ea863eb51ade375"
     integrity sha512-8hmiGIJMDlwjg7dlJ4yKGLK8EsYqKgPWbG3b4wjJddKNwc7N7Dpn08Df4szr/sZdMVeOstrdYSsqzX6BYbcB+w==
   
-  through@2, through@^2.3.8, through@~2.3, through@~2.3.4:
+  through2@~2.0.3:
+    version "2.0.5"
+    resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.5.tgz#01c1e39eb31d07cb7d03a96a70823260b23132cd"
+    integrity sha512-/mrRod8xqpA+IHSLyGCQ2s8SPHiCDEeQJSep1jqLYeEUClOFG2Qsh+4FU6G9VeqpZnGW/Su8LQGc4YKni5rYSQ==
+    dependencies:
+      readable-stream "~2.3.6"
+      xtend "~4.0.1"
+  
+  through@2, "through@>=2.2.7 <3", through@^2.3.8, through@~2.3, through@~2.3.4:
     version "2.3.8"
     resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
     integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
@@ -3351,6 +3474,11 @@ Lockfile:
     version "0.1.2"
     resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
     integrity sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==
+  
+  util-deprecate@~1.0.1:
+    version "1.0.2"
+    resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
+    integrity sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
   
   uuid@^8.3.2:
     version "8.3.2"
@@ -3468,6 +3596,11 @@ Lockfile:
     version "2.2.0"
     resolved "https://registry.yarnpkg.com/xmlchars/-/xmlchars-2.2.0.tgz#060fe1bcb7f9c76fe2a17db86a9bc3ab894210cb"
     integrity sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==
+  
+  xtend@~4.0.1:
+    version "4.0.2"
+    resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.2.tgz#bb72779f5fa465186b1f438f674fa347fdb5db54"
+    integrity sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==
   
   y18n@^5.0.5:
     version "5.0.8"

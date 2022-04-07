@@ -15,7 +15,7 @@ export interface Discussion {
   system: string;
   description: string | null;
   extra?: {
-    [key: string]: string;
+    [key: string]: string | null;
   };
 }
 

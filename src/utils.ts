@@ -1,5 +1,7 @@
+const JSONStream = require("JSONStream");
 import * as fs from "fs";
 import * as es from "event-stream";
+
 import progress from "progress-stream";
 
 import { Comment, Discussion, Parser } from "./types";
@@ -24,12 +26,18 @@ export const getComments = (): Comment[] => {
 
 export const loopAndParse = <T>(
   path: string,
+  destPath: string,
   parser: Parser<T>,
   splitter: string = "\n"
 ) => {
-  let result: T[] = [];
-  const promise = new Promise<T[]>((resolve, reject) => {
+  const promise = new Promise<void>((resolve, reject) => {
     try {
+      // Write Stream
+      const transformStream = JSONStream.stringify("[", ",\n", "]");
+      const stream = fs.createWriteStream(destPath, { flags: "w" });
+      transformStream.pipe(stream);
+
+      // Progress
       const stat = fs.statSync(path);
       const str = progress({
         length: stat.size,
@@ -38,11 +46,12 @@ export const loopAndParse = <T>(
       str.on("progress", function (progress) {
         process.stdout.clearLine(0);
         process.stdout.cursorTo(0);
-        process.stdout.write(progress.percentage.toFixed(2) + "%");
+        process.stdout.write(`Reading: ${progress.percentage.toFixed(2)}%`);
       });
 
-      console.log(`${path}: Start`);
-      fs.createReadStream(path, "utf8")
+      console.log(`\n${path}: Start`);
+      const readStream = fs
+        .createReadStream(path, "utf8")
         .pipe(str)
         .pipe(es.split(splitter))
         .pipe(
@@ -59,20 +68,30 @@ export const loopAndParse = <T>(
         )
         .pipe(
           es.mapSync((line: any) => {
+            readStream.pause();
             const parsed = parser(line);
+            let ok = true;
             if (parsed) {
-              result.push(parsed);
-              return parsed;
+              ok = transformStream.write(parsed);
+            }
+            if (ok) {
+              readStream.resume();
+            } else {
+              transformStream.once("drain", function () {
+                readStream.resume();
+              });
             }
           })
         )
         .on("error", function (err) {
           console.log(`\n${path} - Error: ${err}`);
+          transformStream.end();
           reject();
         })
         .on("end", function () {
           console.log(`\n${path}: Done`);
-          resolve(result);
+          transformStream.end();
+          resolve();
         });
     } catch (err) {
       console.error(`\n ${err}`);
@@ -86,25 +105,28 @@ export const loopAndParse = <T>(
 
 export const saveContent = <T extends { system: string }>(
   path: string,
-  system: string,
   content: T[]
 ) => {
   try {
-    let oldContent: any;
-    try {
-      const fileContent = fs.readFileSync(path, "utf8");
-      oldContent = JSON.parse(fileContent ?? "[]");
-    } catch {
-      oldContent = [];
-    }
-    const contentToSpread = oldContent.filter(
-      (row: T) => row.system !== system
-    );
+    const transformStream = JSONStream.stringify();
+    const stream = fs.createWriteStream(path, { flags: "w" });
+    transformStream.pipe(stream);
 
-    fs.writeFileSync(path, JSON.stringify([...contentToSpread, ...content]), {
-      flag: "w",
+    content.forEach((obj, idx, arr) => {
+      transformStream.write(obj);
+
+      process.stdout.clearLine(0);
+      process.stdout.cursorTo(0);
+      process.stdout.write(
+        `Writing: ${((idx / arr.length) * 100).toFixed(2)}%`
+      );
     });
+    transformStream.end();
   } catch (err) {
     console.log("saveContent", err);
   }
+};
+
+export const isValidDate = (date: Date) => {
+  return date instanceof Date && !isNaN(date as unknown as number);
 };

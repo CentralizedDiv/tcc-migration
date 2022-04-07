@@ -56,7 +56,7 @@ describe("myanimelist", () => {
   test("Discussion", () => {
     const discussions = JSON.parse(
       fs.readFileSync(
-        "F://tcc//__unified_database//myanimelist.discussions.json",
+        "D://workfolder//tcc//__unified_database//myanimelist.discussions.json",
         "utf8"
       )
     );
@@ -67,7 +67,7 @@ describe("myanimelist", () => {
   test("Comment", () => {
     const comments = JSON.parse(
       fs.readFileSync(
-        "F://tcc//__unified_database//myanimelist.comments.json",
+        "D://workfolder//tcc//__unified_database//myanimelist.comments.json",
         "utf8"
       )
     );

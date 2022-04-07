@@ -5,7 +5,7 @@ import {
 } from "./myanimelist.functions";
 import { Discussion } from "../../types";
 
-const base_path = "F://tcc//";
+const base_path = "D://workfolder//tcc//";
 
 (async function () {
   // myanimelist Discussions
@@ -41,13 +41,13 @@ const base_path = "F://tcc//";
   try {
     const files = [
       "comentarios-MALFITT.jsonlines",
-      // "comentarios-myanimelist-20180502.jsonlines",
-      // "comentarios-myanimelist-20180503.jsonlines",
-      // "comentarios-myanimelist-20180507.jsonlines",
-      // "comentarios-myanimelist-20181030.jsonlines",
-      // "comentarios-myanimelist-20190211.jsonlines",
-      // "comentarios-myanimelist-20190214.jsonlines",
-      // "comentarios-myanimelist-20190225.jsonlines",
+      "comentarios-myanimelist-20180502.jsonlines",
+      "comentarios-myanimelist-20180503.jsonlines",
+      "comentarios-myanimelist-20180507.jsonlines",
+      "comentarios-myanimelist-20181030.jsonlines",
+      "comentarios-myanimelist-20190211.jsonlines",
+      "comentarios-myanimelist-20190214.jsonlines",
+      "comentarios-myanimelist-20190225.jsonlines",
     ];
     const comments = [];
     for (let path of files) {
