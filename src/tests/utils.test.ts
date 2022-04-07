@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import { Readable } from "stream";
-import { loopAndParse, saveContent } from "../utils";
+import { loopAndParse } from "../utils";
 
 jest.mock("fs");
 

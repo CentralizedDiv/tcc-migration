@@ -27,16 +27,19 @@ const myanimelistDiscussions: { [key: string]: Discussion } = {};
 const myanimelistComments: { [key: string]: Comment } = {};
 
 const stripmsg = (c: string) => {
-  return c
-    .split("forum_boardrow1")[1]
-    .split('id="messageEditWaiting')[0]
-    .replace(/(<([^>]+)>)/gi, "")
-    .replace(/\n/g, "")
-    .replace(/\t/g, "")
-    .replace(/\r/g, "")
-    .replace(/&#13;/g, "")
-    .split(">")[1]
-    .split("<")[0];
+  if (!c?.split) return "";
+  return (
+    c
+      ?.split("forum_boardrow1")?.[1]
+      ?.split('id="messageEditWaiting')?.[0]
+      ?.replace(/(<([^>]+)>)/gi, "")
+      ?.replace(/\n/g, "")
+      ?.replace(/\t/g, "")
+      ?.replace(/\r/g, "")
+      ?.replace(/&#13;/g, "")
+      ?.split(">")?.[1]
+      ?.split("<")?.[0] ?? ""
+  );
 };
 
 const getCommentOriginalId = (c: string) => {
@@ -50,12 +53,20 @@ const getCommentOriginalId = (c: string) => {
 const formatDiscussion = (
   raw: MyAnimeListRawDiscussion
 ): MyAnimeListDiscussion => {
-  const [id, partialUrl, title] = raw.split("\t");
-  return {
-    id,
-    partialUrl,
-    title,
-  };
+  if (raw?.split) {
+    const [id, partialUrl, title] = raw.split("\t");
+    return {
+      id,
+      partialUrl,
+      title,
+    };
+  } else {
+    return {
+      id: "",
+      partialUrl: "",
+      title: "",
+    };
+  }
 };
 
 const getAnimes = () => {
@@ -78,13 +89,15 @@ const getAnimes = () => {
       ],
       [] as string[]
     )
-    .map((plot) => {
-      const [id, url, animeTitle] = plot.split("\t");
-      myanimelistAnimes[id] = {
-        id,
-        url,
-        animeTitle,
-      };
+    .forEach((plot) => {
+      if (plot?.split) {
+        const [id, url, animeTitle] = plot.split("\t");
+        myanimelistAnimes[id] = {
+          id,
+          url,
+          animeTitle,
+        };
+      }
     });
 };
 
@@ -92,7 +105,7 @@ export const myanimelistDiscussionParser = (
   rawEntry: MyAnimeListRawDiscussion
 ): Discussion | undefined => {
   const entry = formatDiscussion(rawEntry);
-  if (!myanimelistDiscussions.hasOwnProperty(entry.id)) {
+  if (entry.id && !myanimelistDiscussions.hasOwnProperty(entry.id)) {
     const id = uuid();
     const discussion: Discussion = {
       id,

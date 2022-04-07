@@ -5,6 +5,7 @@ import * as es from "event-stream";
 import progress from "progress-stream";
 
 import { Comment, Discussion, Parser } from "./types";
+import { PassThrough, Stream } from "stream";
 
 export const getDiscussions = (): Discussion[] => {
   return JSON.parse(
@@ -46,7 +47,7 @@ export const loopAndParse = <T>(
       str.on("progress", function (progress) {
         process.stdout.clearLine(0);
         process.stdout.cursorTo(0);
-        process.stdout.write(`Reading: ${progress.percentage.toFixed(2)}%`);
+        process.stdout.write(`${progress.percentage.toFixed(2)}%`);
       });
 
       console.log(`\n${path}: Start`);
@@ -89,7 +90,9 @@ export const loopAndParse = <T>(
           reject();
         })
         .on("end", function () {
-          console.log(`\n${path}: Done`);
+          process.stdout.clearLine(0);
+          process.stdout.cursorTo(0);
+          console.log(`${path}: Done`);
           transformStream.end();
           resolve();
         });
@@ -103,30 +106,16 @@ export const loopAndParse = <T>(
   return promise;
 };
 
-export const saveContent = <T extends { system: string }>(
-  path: string,
-  content: T[]
-) => {
-  try {
-    const transformStream = JSONStream.stringify();
-    const stream = fs.createWriteStream(path, { flags: "w" });
-    transformStream.pipe(stream);
-
-    content.forEach((obj, idx, arr) => {
-      transformStream.write(obj);
-
-      process.stdout.clearLine(0);
-      process.stdout.cursorTo(0);
-      process.stdout.write(
-        `Writing: ${((idx / arr.length) * 100).toFixed(2)}%`
-      );
-    });
-    transformStream.end();
-  } catch (err) {
-    console.log("saveContent", err);
-  }
-};
-
 export const isValidDate = (date: Date) => {
   return date instanceof Date && !isNaN(date as unknown as number);
+};
+
+const merge = (...streams: Stream[]) => {
+  let pass = new PassThrough();
+  let waiting = streams.length;
+  for (let stream of streams) {
+    pass = stream.pipe(pass, { end: false });
+    stream.once("end", () => --waiting === 0 && pass.emit("end"));
+  }
+  return pass;
 };
