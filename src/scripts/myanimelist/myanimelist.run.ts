@@ -1,10 +1,12 @@
-import { loopAndParse } from "../../utils";
+import {
+  loopAndParse,
+  originalDatabasesDir,
+  unifiedDatabasesDir,
+} from "../../utils";
 import {
   myanimelistDiscussionParser,
   myanimelistCommentsParser,
 } from "./myanimelist.functions";
-
-const base_path = "D://workfolder//tcc//";
 
 export default async function () {
   // myanimelist Discussions
@@ -16,8 +18,8 @@ export default async function () {
         "lista_topicos-20190211.txt",
         "lista_topicos-20181030.txt",
         "lista_topicos-20180624que.txt",
-      ].map((path) => base_path + "__original_databases//myanimelist//" + path),
-      base_path + "__unified_database//myanimelist.discussions.json",
+      ].map((path) => originalDatabasesDir + "myanimelist/" + path),
+      unifiedDatabasesDir + "myanimelist.discussions.json",
       myanimelistDiscussionParser
     );
   } catch (err) {
@@ -36,8 +38,8 @@ export default async function () {
         "comentarios-myanimelist-20190211.jsonlines",
         "comentarios-myanimelist-20190214.jsonlines",
         "comentarios-myanimelist-20190225.jsonlines",
-      ].map((path) => base_path + "__original_databases//myanimelist//" + path),
-      base_path + "__unified_database//myanimelist.comments.json",
+      ].map((path) => originalDatabasesDir + "myanimelist/" + path),
+      unifiedDatabasesDir + "myanimelist.comments.json",
       myanimelistCommentsParser
     );
   } catch (err) {

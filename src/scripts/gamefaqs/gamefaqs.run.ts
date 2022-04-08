@@ -1,17 +1,19 @@
-import { loopAndParse } from "../../utils";
+import {
+  loopAndParse,
+  originalDatabasesDir,
+  unifiedDatabasesDir,
+} from "../../utils";
 import {
   gamefaqsDiscussionParser,
   gamefaqsCommentsParser,
 } from "./gamefaqs.functions";
 
-const base_path = "D://workfolder//tcc//";
-
 export default async function () {
   // gamefaqs Discussions
   try {
     await loopAndParse(
-      [base_path + "__original_databases//gamefaqs//lista_topicos.txt"],
-      base_path + "__unified_database//gamefaqs.discussions.json",
+      [originalDatabasesDir + "gamefaqs/lista_topicos.txt"],
+      unifiedDatabasesDir + "gamefaqs.discussions.json",
       gamefaqsDiscussionParser
     );
   } catch (err) {
@@ -21,8 +23,8 @@ export default async function () {
   // gamefaqs Comments
   try {
     await loopAndParse(
-      [base_path + "__original_databases//comseqs//comseqs_gamefaqs.jsonl"],
-      base_path + "__unified_database//gamefaqs.comments.json",
+      [originalDatabasesDir + "comseqs/comseqs_gamefaqs.jsonl"],
+      unifiedDatabasesDir + "gamefaqs.comments.json",
       gamefaqsCommentsParser
     );
   } catch (err) {

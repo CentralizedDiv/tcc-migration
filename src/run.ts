@@ -7,9 +7,9 @@ import gamefaqs from "./scripts/gamefaqs/gamefaqs.run";
 
 (async function () {
   await movietalk();
-  // await youtube();
-  // await reddit();
-  // await goodreads();
-  // await gamefaqs();
-  // await myanimelist();
+  await youtube();
+  await reddit();
+  await goodreads();
+  await gamefaqs();
+  await myanimelist();
 })();
