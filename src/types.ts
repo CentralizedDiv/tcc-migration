@@ -1,4 +1,4 @@
-export type Parser<T, J = any> = (entry: J) => T;
+export type Parser<T, J = any> = (entry: J) => T | undefined;
 
 export interface System {
   id: string;

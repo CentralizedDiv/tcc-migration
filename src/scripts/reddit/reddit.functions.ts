@@ -1,7 +1,6 @@
 import { Comment, Discussion, Parser } from "../../types";
 import { v4 as uuid } from "uuid";
 import * as fs from "fs";
-import { getDiscussions } from "../../utils";
 
 interface RedditDiscussion {
   dID: string;
@@ -26,7 +25,7 @@ interface RedditPlot {
 }
 
 let _plots: RedditPlot[] | undefined = undefined;
-let _discussions: Discussion[] | undefined = undefined;
+const discussions: { [key: string]: Discussion } = {};
 
 const getPlots = (): RedditPlot[] => {
   return ["comedy_plots.jsonl", "drama.jsonl", "medical_plots.jsonl"]
@@ -81,20 +80,13 @@ export const redditDiscussionParser: Parser<Discussion, RedditDiscussion> = (
       url: entry.url,
     },
   };
+  discussions[entry.dID?.toString()] = discussion;
   return discussion;
 };
 
 export const redditCommentsParser: Parser<Comment, RedditComment> = (entry) => {
   const id = uuid();
-
-  const discussions = _discussions ?? getDiscussions();
-  if (!_discussions) {
-    _discussions = discussions;
-  }
-
-  const discussionId = discussions.find(
-    (discussion: Discussion) => discussion.extra?.originalId === entry.dID
-  )?.id;
+  const discussionId = discussions[entry.dID?.toString()]?.id;
 
   const comment: Comment = {
     id,

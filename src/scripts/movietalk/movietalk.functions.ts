@@ -20,7 +20,7 @@ interface MovieTalkComment {
 
 const stripmsg = (originalMsg: string): string => {
   try {
-    originalMsg
+    return originalMsg
       .split("<!-- message -->")[1]
       .split("message -->")[0]
       .split("\x3C!-- google_ad_section_start -->")[1]
@@ -34,7 +34,7 @@ const stripmsg = (originalMsg: string): string => {
     return originalMsg;
   }
 };
-const getIMDBMovieInfo = (id: string): [string, string] => {
+const getIMDBMovieInfo = (id: string): [string | null, string | null] => {
   try {
     const content = fs.readFileSync(
       "D://workfolder//tcc//__original_databases//movietalk//movies_imdb.json",

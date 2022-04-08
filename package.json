@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "jest",
+    "test": "jest -- src/tests/utils.test.ts",
     "integration-test": "jest -- src/tests/integration.test.ts",
     "generate": "node --max_old_space_size=8192 -r ts-node/register ./src/run.ts"
   },

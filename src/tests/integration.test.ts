@@ -23,49 +23,80 @@ const searchOnFile = (path: string, id: string, system: string) => {
   });
 };
 describe("Integration", () => {
-  // describe("Reddit", () => {
-  //   test("Discussion", () => {
-  //     expect(discussions.filter(baseFilter("1nvo5z", "REDDIT"))).toHaveLength(1);
-  //   });
-  //   test("Comment", () => {
-  //     expect(comments.filter(baseFilter("ccah352", "REDDIT"))).toHaveLength(1);
-  //   });
-  // });
+  describe("Reddit", () => {
+    test("Discussion", async () => {
+      const found = await searchOnFile(
+        "D://workfolder//tcc//__unified_database//reddit.discussions.json",
+        "1nvo5z",
+        "REDDIT"
+      );
+      expect(found).toBeTruthy();
+    });
+    test("Comment", async () => {
+      const found = await searchOnFile(
+        "D://workfolder//tcc//__unified_database//reddit.comments.json",
+        "ccah352",
+        "REDDIT"
+      );
+      expect(found).toBeTruthy();
+    });
+  });
 
-  // describe("Youtube", () => {
-  //   test("Discussion", () => {
-  //     expect(
-  //       discussions.filter(baseFilter("ORqLy6ANNbk", "YOUTUBE"))
-  //     ).toHaveLength(1);
-  //   });
-  //   test("Comment", () => {
-  //     expect(
-  //       comments.filter(baseFilter("Ugge3mUBme2mm3gCoAEC", "YOUTUBE"))
-  //     ).toHaveLength(1);
-  //   });
-  // });
+  describe("Youtube", () => {
+    test("Discussion", async () => {
+      const found = await searchOnFile(
+        "D://workfolder//tcc//__unified_database//youtube.discussions.json",
+        "ORqLy6ANNbk",
+        "YOUTUBE"
+      );
+      expect(found).toBeTruthy();
+    });
+    test("Comment", async () => {
+      const found = await searchOnFile(
+        "D://workfolder//tcc//__unified_database//youtube.comments.json",
+        "Ugge3mUBme2mm3gCoAEC",
+        "YOUTUBE"
+      );
+      expect(found).toBeTruthy();
+    });
+  });
 
-  // describe("goodreads", () => {
-  //   test("Discussion", () => {
-  //     expect(discussions.filter(baseFilter("1", "GOODREADS"))).toHaveLength(1);
-  //   });
-  //   test("Comment", () => {
-  //     expect(comments.filter(baseFilter("6760426", "GOODREADS"))).toHaveLength(1);
-  //   });
-  // });
+  describe("goodreads", () => {
+    test("Discussion", async () => {
+      const found = await searchOnFile(
+        "D://workfolder//tcc//__unified_database//goodreads.discussions.json",
+        "1",
+        "GOODREADS"
+      );
+    });
+    test("Comment", async () => {
+      const found = await searchOnFile(
+        "D://workfolder//tcc//__unified_database//goodreads.comments.json",
+        "6760426",
+        "GOODREADS"
+      );
+      expect(found).toBeTruthy();
+    });
+  });
 
-  // describe("movietalk", () => {
-  //   test("Discussion", () => {
-  //     expect(discussions.filter(baseFilter("620797", "MOVIETALK"))).toHaveLength(
-  //       1
-  //     );
-  //   });
-  //   test("Comment", () => {
-  //     expect(comments.filter(baseFilter("11525601", "MOVIETALK"))).toHaveLength(
-  //       1
-  //     );
-  //   });
-  // });
+  describe("movietalk", () => {
+    test("Discussion", async () => {
+      const found = await searchOnFile(
+        "D://workfolder//tcc//__unified_database//movietalk.discussions.json",
+        "620797",
+        "MOVIETALK"
+      );
+      expect(found).toBeTruthy();
+    });
+    test("Comment", async () => {
+      const found = await searchOnFile(
+        "D://workfolder//tcc//__unified_database//movietalk.comments.json",
+        "11525601",
+        "MOVIETALK"
+      );
+      expect(found).toBeTruthy();
+    });
+  });
 
   describe("myanimelist", () => {
     test("Discussion", async () => {
@@ -88,7 +119,7 @@ describe("Integration", () => {
   });
 
   describe("gamefaqs", () => {
-    /* test("Discussion", async () => {
+    test("Discussion", async () => {
       const found = await searchOnFile(
         "D://workfolder//tcc//__unified_database//gamefaqs.discussions.json",
         "73000753",
@@ -104,6 +135,6 @@ describe("Integration", () => {
         "GAMEFAQS"
       );
       expect(found).toBeTruthy();
-    }); */
+    });
   });
 });

@@ -1,7 +1,6 @@
 import { Comment, Discussion, Parser } from "../../types";
 import { v4 as uuid } from "uuid";
 import * as fs from "fs";
-import { getDiscussions } from "../../utils";
 
 type GoodreadsDiscussionRaw = string;
 interface GoodreadsDiscussion {
@@ -31,7 +30,7 @@ interface GoodreadsPlot {
 }
 
 let _plots: GoodreadsPlot[] | undefined = undefined;
-let _discussions: Discussion[] | undefined = undefined;
+const discussions: { [key: string]: Discussion } = {};
 
 const getPlots = (): GoodreadsPlot[] => {
   return fs
@@ -74,40 +73,35 @@ export const goodreadsDiscussionParser: Parser<
     id,
     system: "GOODREADS",
     label: entry.title,
-    description: plot?.summary,
+    description: plot?.summary ?? null,
     extra: {
       originalId: entry.id?.toString(),
-      url: plot?.url,
-      plot: plot?.plot,
+      url: plot?.url ?? null,
+      plot: plot?.plot ?? null,
     },
   };
+  discussions[entry.id?.toString()] = discussion;
   return discussion;
 };
 
 export const goodreadsCommentsParser: Parser<Comment, GoodreadsComment> = (
   entry
 ) => {
-  const id = uuid();
+  try {
+    const id = uuid();
+    const discussionId = discussions[entry.dID?.toString()].id;
 
-  const discussions = _discussions ?? getDiscussions();
-  if (!_discussions) {
-    _discussions = discussions;
-  }
-
-  const discussionId = discussions.find(
-    (discussion: Discussion) => discussion.extra?.originalId === entry.dID
-  )?.id;
-
-  const comment: Comment = {
-    id,
-    system: "GOODREADS",
-    discussionId: discussionId ?? entry.dID,
-    date: null,
-    content: entry.c,
-    extra: {
-      user: entry.cat,
-      originalId: entry.tID?.toString(),
-    },
-  };
-  return comment;
+    const comment: Comment = {
+      id,
+      system: "GOODREADS",
+      discussionId: discussionId ?? entry.dID,
+      date: null,
+      content: entry.c,
+      extra: {
+        user: entry.cat,
+        originalId: entry.tID?.toString(),
+      },
+    };
+    return comment;
+  } catch {}
 };

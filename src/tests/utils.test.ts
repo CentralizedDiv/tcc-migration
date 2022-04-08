@@ -1,16 +1,13 @@
+const JSONStream = require("JSONStream");
 import * as fs from "fs";
-import { Readable } from "stream";
+import { Readable, Writable } from "stream";
 import { loopAndParse } from "../utils";
 
 jest.mock("fs");
 
 describe("Utils", () => {
-  let writeFileSync;
-
   beforeAll(() => {
-    writeFileSync = jest
-      .spyOn(fs, "writeFileSync")
-      .mockImplementation(() => {});
+    jest.spyOn(fs, "statSync").mockImplementation(() => ({ size: 0 } as any));
   });
 
   afterAll(() => {
@@ -18,56 +15,31 @@ describe("Utils", () => {
     jest.clearAllMocks();
   });
 
-  test("Default", () => expect(true).toBeTruthy());
-
-  /* test("loopAndParse", async () => {
+  test("loopAndParse", async () => {
     const stream = Readable.from([
       '{"system": "Test", "content":"Bla"}\n{"system": "Test2", "content":"Bla"}',
     ]);
-
+    const wStream = new Writable({
+      write: jest.fn(),
+    });
+    wStream._write = jest.fn();
     jest
       .spyOn(fs, "createReadStream")
       .mockReturnValueOnce(stream as unknown as fs.ReadStream);
-
-    expect(
-      await loopAndParse("PATH", (original) => ({
-        parsedSystem: original.system,
-      }))
-    ).toStrictEqual([{ parsedSystem: "Test" }, { parsedSystem: "Test2" }]);
-  });
-
-  test("saveContent with two systems", () => {
     jest
-      .spyOn(fs, "readFileSync")
-      .mockReturnValueOnce(
-        '[{ "system": "Test", "content": "Bla" }, {"system": "Test2", "content": "Bla"}]'
-      );
+      .spyOn(fs, "createWriteStream")
+      .mockReturnValueOnce(wStream as unknown as fs.WriteStream);
 
-    saveContent("PATH", "Test", [{ system: "Test", content: "BlaBla" }]);
-    expect(writeFileSync).toHaveBeenCalledWith(
-      "PATH",
-      JSON.stringify([
-        { system: "Test2", content: "Bla" },
-        { system: "Test", content: "BlaBla" },
-      ])
-    );
+    const transformer = JSONStream.stringify("[", ",\n", "]");
+    const tStream = jest.spyOn(transformer, "write");
+    jest.spyOn(JSONStream, "stringify").mockReturnValueOnce(transformer);
+
+    await loopAndParse(["PATH"], "path.parsed.json", (original) => ({
+      parsedSystem: original.system,
+    }));
+
+    expect(tStream).toHaveBeenCalledTimes(2);
+    expect(tStream).toHaveBeenCalledWith({ parsedSystem: "Test" });
+    expect(tStream).toHaveBeenCalledWith({ parsedSystem: "Test2" });
   });
-
-  test("saveContent with more systens", () => {
-    jest
-      .spyOn(fs, "readFileSync")
-      .mockReturnValueOnce(
-        '[{ "system": "Test", "content": "Bla" }, { "system": "Test", "content": "Bla" }, { "system": "Test2", "content": "Bla" }, { "system": "Test3", "content": "Bla" }]'
-      );
-
-    saveContent("PATH", "Test", [{ system: "Test", content: "BlaBla" }]);
-    expect(writeFileSync).toHaveBeenCalledWith(
-      "PATH",
-      JSON.stringify([
-        { system: "Test2", content: "Bla" },
-        { system: "Test3", content: "Bla" },
-        { system: "Test", content: "BlaBla" },
-      ])
-    );
-  }); */
 });

@@ -1,21 +1,20 @@
-import { loopAndParse, saveContent } from "../../utils";
+import {
+  loopAndParse,
+  originalDatabasesDir,
+  unifiedDatabasesDir,
+} from "../../utils";
 import {
   goodreadsDiscussionParser,
   goodreadsCommentsParser,
 } from "./goodreads.functions";
 
-(async function () {
+export default async function () {
   // goodreads Discussions
   try {
-    const discussions = await loopAndParse(
-      "D://workfolder//tcc//__original_databases//goodreads//titles.txt",
+    await loopAndParse(
+      [originalDatabasesDir + "goodreads/titles.txt"],
+      unifiedDatabasesDir + "goodreads.discussions.json",
       goodreadsDiscussionParser
-    );
-
-    saveContent(
-      "D://workfolder//tcc//__unified_database//discussions.json",
-      "GOODREADS",
-      discussions
     );
   } catch (err) {
     console.error(err);
@@ -23,17 +22,12 @@ import {
 
   // goodreads Comments
   try {
-    const comments = await loopAndParse(
-      "D://workfolder//tcc//__original_databases//goodreads//comments.jl",
+    await loopAndParse(
+      [originalDatabasesDir + "goodreads/comments.jl"],
+      unifiedDatabasesDir + "goodreads.comments.json",
       goodreadsCommentsParser
-    );
-
-    saveContent(
-      "D://workfolder//tcc//__unified_database//comments.json",
-      "GOODREADS",
-      comments
     );
   } catch (err) {
     console.error(err);
   }
-})();
+}

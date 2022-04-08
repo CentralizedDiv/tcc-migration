@@ -1,44 +1,35 @@
-import { Comment } from "../../types";
-import { loopAndParse, saveContent } from "../../utils";
+import {
+  loopAndParse,
+  originalDatabasesDir,
+  unifiedDatabasesDir,
+} from "../../utils";
 import {
   redditDiscussionParser,
   redditCommentsParser,
 } from "./reddit.functions";
 
-// Reddit Discussions
-try {
-  const discussions = loopAndParse(
-    "D://workfolder//tcc//__original_databases//reddit//domains.jsonl",
-    redditDiscussionParser
-  );
+export default async function () {
+  // Reddit Discussions
+  try {
+    await loopAndParse(
+      [originalDatabasesDir + "reddit/domains.jsonl"],
+      unifiedDatabasesDir + "reddit.discussions.json",
+      redditDiscussionParser
+    );
+  } catch (err) {
+    console.error(err);
+  }
 
-  saveContent(
-    "D://workfolder//tcc//__unified_database//discussions.json",
-    "REDDIT",
-    discussions
-  );
-} catch (err) {
-  console.error(err);
-}
-
-// Reddit Comments
-try {
-  const comments = ["comedy.jsonl", "drama.jsonl", "medical.jsonl"].reduce(
-    (acc, file) => [
-      ...acc,
-      ...loopAndParse(
-        "D://workfolder//tcc//__original_databases//reddit//comments//" + file,
-        redditCommentsParser
+  // Reddit Comments
+  try {
+    await loopAndParse(
+      ["comedy.jsonl", "drama.jsonl", "medical.jsonl"].map(
+        (path) => originalDatabasesDir + "reddit/comments/" + path
       ),
-    ],
-    [] as Comment[]
-  );
-
-  saveContent(
-    "D://workfolder//tcc//__unified_database//comments.json",
-    "REDDIT",
-    comments
-  );
-} catch (err) {
-  console.error(err);
+      unifiedDatabasesDir + "/reddit.comments.json",
+      redditCommentsParser
+    );
+  } catch (err) {
+    console.error(err);
+  }
 }

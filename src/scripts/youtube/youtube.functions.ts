@@ -1,5 +1,4 @@
 import { Parser, Discussion, Comment } from "../../types";
-import { getDiscussions } from "../../utils";
 import { v4 as uuid } from "uuid";
 
 interface YoutubeComment {
@@ -14,7 +13,7 @@ interface YoutubeDiscussion {
   WikiUrl: string[];
 }
 
-let _discussions: Discussion[] | undefined = undefined;
+let discussions: { [key: string]: Discussion } = {};
 
 export const youtubeDiscussionParser: Parser<Discussion, YoutubeDiscussion> = (
   entry
@@ -31,6 +30,7 @@ export const youtubeDiscussionParser: Parser<Discussion, YoutubeDiscussion> = (
       WikiUrl: JSON.stringify(entry.WikiUrl),
     },
   };
+  discussions[entry.vID?.toString()] = discussion;
   return discussion;
 };
 
@@ -38,15 +38,7 @@ export const youtubeCommentsParser: Parser<Comment, YoutubeComment> = (
   entry
 ) => {
   const id = uuid();
-
-  const discussions = _discussions ?? getDiscussions();
-  if (!_discussions) {
-    _discussions = discussions;
-  }
-
-  const discussionId = discussions.find(
-    (discussion: Discussion) => discussion.extra?.originalId === entry.vID
-  )?.id;
+  const discussionId = discussions[entry.vID?.toString()]?.id;
 
   const comment: Comment = {
     id,

@@ -1,37 +1,33 @@
-import { loopAndParse, saveContent } from "../../utils";
+import {
+  loopAndParse,
+  originalDatabasesDir,
+  unifiedDatabasesDir,
+} from "../../utils";
 import {
   youtubeDiscussionParser,
   youtubeCommentsParser,
 } from "./youtube.functions";
 
-// Youtube Discussions
-try {
-  const discussions = loopAndParse(
-    "D://workfolder//tcc//__original_databases//youtube//domains.jsonl",
-    youtubeDiscussionParser
-  );
+export default async function () {
+  // Youtube Discussions
+  try {
+    await loopAndParse(
+      [originalDatabasesDir + "youtube//domains.jsonl"],
+      unifiedDatabasesDir + "youtube.discussions.json",
+      youtubeDiscussionParser
+    );
+  } catch (err) {
+    console.error(err);
+  }
 
-  saveContent(
-    "D://workfolder//tcc//__unified_database//discussions.json",
-    "YOUTUBE",
-    discussions
-  );
-} catch (err) {
-  console.error(err);
-}
-
-// Youtube Comments
-try {
-  const comments = loopAndParse(
-    "D://workfolder//tcc//__original_databases//youtube//comments.jsonl",
-    youtubeCommentsParser
-  );
-
-  saveContent(
-    "D://workfolder//tcc//__unified_database//comments.json",
-    "YOUTUBE",
-    comments
-  );
-} catch (err) {
-  console.error(err);
+  // Youtube Comments
+  try {
+    await loopAndParse(
+      [originalDatabasesDir + "/youtube/comments.jsonl"],
+      unifiedDatabasesDir + "youtube.comments.json",
+      youtubeCommentsParser
+    );
+  } catch (err) {
+    console.error(err);
+  }
 }
